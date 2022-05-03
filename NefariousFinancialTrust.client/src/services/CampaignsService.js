@@ -17,6 +17,7 @@ class CampaignsService {
   async getDonationsByCampaignId(campaignId) {
     const res = await api.get('api/campaigns/' + campaignId + '/donations')
     logger.log('campaign donations', res.data)
+    AppState.donations = res.data
   }
 }
 
