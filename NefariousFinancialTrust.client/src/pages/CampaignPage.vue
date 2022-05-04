@@ -2,36 +2,43 @@
   <div class="container-fluid">
     <div v-if="campaign">
       <div class="row justify-content-center p-2">
-        <div class="col-md-6">
+        <div class="col-md-7">
           <div class="bg-light shadow rounded p-2">
             <h1>{{ campaign.title }}</h1>
             <p>{{ campaign.description }}</p>
-            <h4>Goal: ${{ campaign.goal }}</h4>
+            <h5>Goal: ${{ campaign.goal }}</h5>
+            <div class="d-flex mt-4 align-items-center">
+              <img
+                :src="campaign.creator.picture"
+                :alt="campaign.creator.picture"
+              />
+              <h6 class="ms-2">{{ campaign.creator.name }}</h6>
+            </div>
           </div>
         </div>
       </div>
-      <div class="row justify-content-center p-2">
-        <div class="col-md-6">
-          <div class="bg-light shadow rounded p-2">
-            <form>
-              <div class="form-control bg-light p-2">
-                <input
-                  type="number"
-                  name="amount"
-                  id="amount"
-                  placeholder="Enter Donation..."
-                  class="form-control"
-                />
-                <div class="d-flex justify-content-end">
-                  <button class="btn btn-success mt-2 ms-auto">Donate</button>
-                </div>
+      <div class="row justify-content-center mt-1 p-2">
+        <div class="col-md-7">
+          <form>
+            <div class="bg-light shadow form-control p-2">
+              <input
+                type="number"
+                name="amount"
+                id="amount"
+                placeholder="Enter Donation..."
+                class="form-control"
+                required
+                min="100"
+              />
+              <div class="d-flex justify-content-end">
+                <button class="btn btn-success mt-2 ms-auto">Donate</button>
               </div>
-            </form>
-          </div>
+            </div>
+          </form>
         </div>
       </div>
-      <div class="row justify-content-center p-2">
-        <div class="col-md-6">
+      <div class="row justify-content-center mt-5 p-2">
+        <div class="col-md-7">
           <div class="bg-light shadow rounded p-2">
             <div v-if="donations.length > 0">
               <!-- TODO need to display donation component when we get that data -->
@@ -83,5 +90,15 @@ export default {
 <style lang="scss" scoped>
 .row-height {
   height: 50vh;
+}
+
+.container-fluid {
+  height: 90vh;
+}
+
+img {
+  height: 50px;
+  width: 50px;
+  border-radius: 50%;
 }
 </style>
