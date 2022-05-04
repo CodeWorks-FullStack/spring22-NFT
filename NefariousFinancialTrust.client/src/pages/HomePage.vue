@@ -2,19 +2,25 @@
   <div class="container-fluid">
     <div class="row p-2">
       <div class="col-md-2">
-        <!-- TODO need to get these working -->
-        <button class="btn btn-success square-right">Open</button>
-        <button class="btn btn-danger square-left">Closed</button>
+        <button class="btn btn-info square-right" @click="filterBy = ''">
+          All
+        </button>
+        <button class="btn btn-success square-right" @click="filterBy = 'open'">
+          Open
+        </button>
+        <button class="btn btn-danger square-left" @click="filterBy = 'closed'">
+          Closed
+        </button>
       </div>
     </div>
     <div class="row p-2">
-      <Campaign v-for="c in campaigns" :key="c.id" :campaign="c" />
+      <Campaign v-for="c in filteredList" :key="c.id" :campaign="c" />
     </div>
   </div>
 </template>
 
 <script>
-import { computed, watchEffect } from "@vue/runtime-core"
+import { computed, ref, watchEffect } from "@vue/runtime-core"
 import { logger } from "../utils/Logger"
 import Pop from "../utils/Pop"
 import { campaignsService } from "../services/CampaignsService"
@@ -22,6 +28,17 @@ import { AppState } from "../AppState"
 export default {
   name: 'Home',
   setup() {
+    const filterBy = ref('')
+    const filteredList = ref([])
+
+    watchEffect(() => {
+      let list = AppState.campaigns
+      if (filterBy.value) {
+        list = list.filter(l => l.status == filterBy.value)
+      }
+      filteredList.value = list
+    })
+
     watchEffect(async () => {
       try {
         await campaignsService.getCampaigns()
@@ -30,8 +47,14 @@ export default {
         Pop.toast(error.message, 'error')
       }
     })
+
+
+
+
+
     return {
-      campaigns: computed(() => AppState.campaigns)
+      filterBy,
+      filteredList
     }
   }
 }

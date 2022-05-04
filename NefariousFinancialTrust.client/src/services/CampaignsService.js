@@ -1,4 +1,5 @@
 import { AppState } from "../AppState"
+import { logger } from "../utils/Logger"
 import { api } from "./AxiosService"
 
 class CampaignsService {
@@ -10,6 +11,11 @@ class CampaignsService {
   async getCampaignById(campaignId) {
     const res = await api.get('api/campaigns/' + campaignId)
     AppState.campaign = res.data
+  }
+
+  async getDonationsByCampaignId(campaignId) {
+    const res = await api.get(`api/campaigns/${campaignId}/donations`)
+    AppState.donations = res.data
   }
 }
 
