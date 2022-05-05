@@ -8,6 +8,7 @@
         <small>inancial</small>
         <h1>T</h1>
         <small>rust</small>
+        <i class="ms-3 mdi mdi-eye"></i>
       </div>
     </router-link>
     <button
@@ -32,7 +33,7 @@
 <script>
 export default {
   setup() {
-    return {};
+    return {}
   },
 };
 </script>
